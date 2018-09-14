@@ -40,6 +40,9 @@ func main() {
 }
 
 func notifyHandler(w http.ResponseWriter, r *http.Request) {
+}
+
+func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm() // Populates request.Form
 	code := r.Form.Get("code")
 	state := r.Form.Get("state")
@@ -58,10 +61,6 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	res := newTokenResponse(byt)
 	fmt.Println("result:", res)
 	w.Write(byt)
-}
-
-func callbackHandler(w http.ResponseWriter, r *http.Request) {
-
 }
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	check := func(err error) {
