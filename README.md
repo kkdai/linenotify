@@ -8,27 +8,53 @@ LineNotify template : A simple Golang Line Notify Bot template
 [![goreportcard.com](https://goreportcard.com/badge/github.com/kkdai/linenotify)](https://goreportcard.com/report/github.com/kkdai/linenotify)
 
 
-## Installation and Usage
+## Just want to try it?
 
+- [Go to my test Line Notify site](https://linenotify-app.herokuapp.com/auth)
+
+![](img/notify1.png)
+
+- Click this button and remember to login your Line account for authenication this notify.
+
+![](img/notify2.png)
+
+- Select one on one notification, click "Agreed and Connected"
+- It will help you to add friend with "Line Notify".
+
+![](img/notify3.png)
+
+- Go to this link add arbitrary string after msg=xxxx ex: https://linenotify-app.herokuapp.com/notify?msg=test
+
+
+![](img/notify4.png)
+
+
+
+## Installation for developer
+
+### 1. Got A Line Bot API devloper account
+
+[Register your Line Notify Account](https://notify-bot.line.me/my/services/new)
+
+- You need to fill all related info you need.
+- For "Service Site" and "Callback URL", just fill arbitrary web site with "http://xxx.xxx.com"
+- Remember you need "Client ID" and "Client Secret" for Heroku setup.
+
+![](img/linenotify-1.png)
+
+
+
+### 2. Just Deploy the same on Heroku
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
+Remember your heroku ID. 
+
+### 3.
+
+<br><br>
 
 ## Reference
 
 - [Line Notify Doc](https://notify-bot.line.me/doc/en/)
 - [實作 Line Notify 通知服務 (1)](https://poychang.github.io/line-notify-1-basic/)
-
-
-
-## License
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
