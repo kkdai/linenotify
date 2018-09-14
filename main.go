@@ -14,18 +14,24 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/alecthomas/template"
 )
 
 var clientID string
 var clientSecret string
+var callbackURL string
 
 func main() {
 	http.HandleFunc("/callback", callbackHandler)
 	http.HandleFunc("/notify", notifyHandler)
+	http.HandleFunc("/auth", authHandler)
 	clientID = os.Getenv("ClientID")
 	clientSecret = os.Getenv("ClientSecret")
+	callbackURL = os.Getenv("CallbackURL")
 	port := os.Getenv("PORT")
 	fmt.Printf("ENV port:%s, cid:%s csecret:%s\n", port, clientID, clientSecret)
 	addr := fmt.Sprintf(":%s", port)
@@ -42,3 +48,58 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 
 }
+func authHandler(w http.ResponseWriter, r *http.Request) {
+	check := func(err error) {
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	t, err := template.New("webpage").Parse(tpl2)
+	check(err)
+	noItems := struct {
+		ClientID    string
+		CallbackURL string
+	}{
+		ClientID:    clientID,
+		CallbackURL: callbackURL,
+	}
+
+	err = t.Execute(w, noItems)
+	check(err)
+}
+
+const tpl2 = `
+<!DOCTYPE html>
+<html lang="tw">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>
+        function oAuth2() {
+            var URL = 'https://notify-bot.line.me/oauth/authorize?';
+            URL += 'response_type=code';
+            URL += '&client_id={{.ClientID}}';
+            URL += '&redirect_uri={{.CallbackURL}}';
+            URL += '&scope=notify';
+            URL += '&state=NO_STATE';
+            window.location.href = URL;
+        }
+    </script>
+    </head>
+    <body>
+        <button onclick="oAuth2();"> 連結到 LineNotify 按鈕 </button>
+	</body>
+`
+
+const tpl = `
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		{{range .Items}}<div>{{ . }}</div>{{else}}<div><strong>no rows</strong></div>{{end}}
+	</body>
+</html>`
