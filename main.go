@@ -18,7 +18,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/alecthomas/template"
+	"html/template"
 )
 
 var clientID string
