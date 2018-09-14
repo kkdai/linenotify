@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 
 	"html/template"
@@ -43,6 +44,20 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	code := r.Form.Get("code")
 	state := r.Form.Get("state")
 	fmt.Printf("Get code=%s, state=%s \n", code, state)
+
+	data := url.Values{}
+	data.Add("grant_type", "authorization_code")
+	data.Add("code", code)
+	data.Add("redirect_uri", callbackURL)
+	data.Add("client_id", clientID)
+	data.Add("client_secret", clientSecret)
+
+	byt, err := Connect("POST", apiToken, data)
+	fmt.Println("ret:", string(byt), " err:", err)
+
+	res := newTokenResponse(byt)
+	fmt.Println("result:", res)
+	w.Write(byt)
 }
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
@@ -54,7 +69,7 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 	}
-	t, err := template.New("webpage").Parse(tpl2)
+	t, err := template.New("webpage").Parse(authTmpl)
 	check(err)
 	noItems := struct {
 		ClientID    string
@@ -67,27 +82,3 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 	err = t.Execute(w, noItems)
 	check(err)
 }
-
-const tpl2 = `
-<!DOCTYPE html>
-<html lang="tw">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script>
-        function oAuth2() {
-            var URL = 'https://notify-bot.line.me/oauth/authorize?';
-            URL += 'response_type=code';
-            URL += '&client_id={{.ClientID}}';
-            URL += '&redirect_uri={{.CallbackURL}}';
-            URL += '&scope=notify';
-            URL += '&state=NO_STATE';
-            window.location.href = URL;
-        }
-    </script>
-    </head>
-    <body>
-        <button onclick="oAuth2();"> 連結到 LineNotify 按鈕 </button>
-	</body>
-`
