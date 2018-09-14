@@ -22,7 +22,7 @@ const (
 	apiNotify         string = "https://notify-api.line.me/api/notify"
 )
 
-func Connect(mode string, inUrl string, data url.Values) ([]byte, *ErrorResponse) {
+func apiCall(mode string, inUrl string, data url.Values, token string) ([]byte, *ErrorResponse) {
 	client := &http.Client{}
 	fmt.Println("connected: ", mode, inUrl, data)
 
@@ -36,6 +36,10 @@ func Connect(mode string, inUrl string, data url.Values) ([]byte, *ErrorResponse
 
 	r.Header.Add("Content-Type", urlEncodedContent)
 	r.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
+
+	if len(token) != 0 {
+		r.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
+	}
 
 	ret := new(ErrorResponse)
 	resp, err := client.Do(r)

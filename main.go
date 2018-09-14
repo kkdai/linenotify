@@ -25,6 +25,7 @@ import (
 var clientID string
 var clientSecret string
 var callbackURL string
+var token string
 
 func main() {
 	http.HandleFunc("/callback", callbackHandler)
@@ -40,6 +41,20 @@ func main() {
 }
 
 func notifyHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm() // Populates request.Form
+	msg := r.Form.Get("msg")
+	fmt.Printf("Get msg=%s\n", msg)
+
+	data := url.Values{}
+	data.Add("message", msg)
+
+	byt, err := apiCall("POST", apiNotify, data, token)
+	fmt.Println("ret:", string(byt), " err:", err)
+
+	res := newTokenResponse(byt)
+	fmt.Println("result:", res)
+	token = res.AccessToken
+	w.Write(byt)
 }
 
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
@@ -55,11 +70,12 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	data.Add("client_id", clientID)
 	data.Add("client_secret", clientSecret)
 
-	byt, err := Connect("POST", apiToken, data)
+	byt, err := apiCall("POST", apiToken, data, "")
 	fmt.Println("ret:", string(byt), " err:", err)
 
 	res := newTokenResponse(byt)
 	fmt.Println("result:", res)
+	token = res.AccessToken
 	w.Write(byt)
 }
 func authHandler(w http.ResponseWriter, r *http.Request) {
