@@ -54,7 +54,7 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 	}
-	t, err := template.New("webpage").Parse(tpl2)
+	t, err := template.New("webpage").ParseFiles("tmp/auth.html")
 	check(err)
 	noItems := struct {
 		ClientID    string
@@ -91,15 +91,3 @@ const tpl2 = `
         <button onclick="oAuth2();"> 連結到 LineNotify 按鈕 </button>
 	</body>
 `
-
-const tpl = `
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>{{.Title}}</title>
-	</head>
-	<body>
-		{{range .Items}}<div>{{ . }}</div>{{else}}<div><strong>no rows</strong></div>{{end}}
-	</body>
-</html>`
