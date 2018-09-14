@@ -54,7 +54,7 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 	}
-	t, err := template.New("webpage").ParseFiles("auth.html")
+	t, err := template.New("webpage").ParseFiles("auth.tmpl")
 	check(err)
 	noItems := struct {
 		ClientID    string
