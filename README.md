@@ -1,11 +1,14 @@
 LineNotify template : A simple Golang Line Notify Bot template
 ==============
 
+
 [![Join the chat at https://gitter.im/kkdai/linenotify](https://badges.gitter.im/kkdai/linenotify.svg)](https://gitter.im/kkdai/linenotify?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
  [![GoDoc](https://godoc.org/github.com/kkdai/linenotify.svg?status.svg)](https://godoc.org/github.com/kkdai/linenotify)  [![Build Status](https://travis-ci.org/kkdai/linenotify.svg?branch=master)](https://travis-ci.org/kkdai/linenotify.svg)
 
 [![goreportcard.com](https://goreportcard.com/badge/github.com/kkdai/linenotify)](https://goreportcard.com/report/github.com/kkdai/linenotify)
+
+![](img/linenotify.png)
 
 This is a template to help you if you want to implement [Line Notify](https://notify-bot.line.me/zh_TW/). It help us follow:
 
@@ -52,17 +55,28 @@ You can just try it or fork this repo to developing your own Line Notify server 
 
 
 
-### 2. Just Deploy the same on Heroku
+### 2. Deploy to your Heroku account
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
 Remember your heroku ID.
 
+### 3. Config your Heroku Variables 
+
+![](img/dev2.png)
+
+Please config three variables as follow:
+
+- `CallbackURL`: Callback URL which should be `https://YOUR_HEROKU_APPID.herokuapp.com/callback`
+- `ClientID`: Client ID from Line Notify page
+- `ClientSecret`: Client Secret from Line Notify page
+
+
 ### 3. Fork this project and add git remote to heroku.
 
 This is example of my heroku settup.
 
-![](img/dev2.png)
+![](img/dev3.png)
 
 In your fork repo, path
 
