@@ -29,6 +29,7 @@ LineNotify template : A simple Golang Line Notify Bot template
 ![](img/notify4.png)
 
 
+<br><br>
 
 ## Installation for developer
 
@@ -40,7 +41,7 @@ LineNotify template : A simple Golang Line Notify Bot template
 - For "Service Site" and "Callback URL", just fill arbitrary web site with "http://xxx.xxx.com"
 - Remember you need "Client ID" and "Client Secret" for Heroku setup.
 
-![](img/linenotify-1.png)
+![](img/dev1.png)
 
 
 
@@ -48,9 +49,32 @@ LineNotify template : A simple Golang Line Notify Bot template
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-Remember your heroku ID. 
+Remember your heroku ID.
 
-### 3.
+### 3. Fork this project and add git remote to heroku.
+
+This is example of my heroku settup.
+
+![](img/dev2.png)
+
+In your fork repo, path
+
+- `git add remote heroku https://git.heroku.com/YOUR_ID.git`
+
+### 4. Update your related code.
+
+- Update `govendor` setting.
+    - Install govendor
+        - `go get -u github.com/kardianos/govendor`
+    - Update root path
+        - `rm -Rf vendor`
+        - `govendor init`
+### 5. Modify your code
+
+### 6. Push to Heroku
+
+- `git push -u heroku HEAD`
+
 
 <br><br>
 
