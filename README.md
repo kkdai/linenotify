@@ -7,6 +7,13 @@ LineNotify template : A simple Golang Line Notify Bot template
 
 [![goreportcard.com](https://goreportcard.com/badge/github.com/kkdai/linenotify)](https://goreportcard.com/report/github.com/kkdai/linenotify)
 
+This is a template to help you if you want to implement [Line Notify](https://notify-bot.line.me/zh_TW/). It help us follow:
+
+- Authenication with Line Notify server
+- Help you to access token from Line Notify server
+- A notify entry point to notify Line Notify server
+
+You can just try it or fork this repo to developing your own Line Notify server in Go.
 
 ## Just want to try it?
 
@@ -77,6 +84,15 @@ In your fork repo, path
 
 
 <br><br>
+
+## Further Work:
+
+If you want to implement business Line Notify service, you will need implement followsing after this repo.
+
+- Implement a database service to store all users' `token` and `code`.
+- Because Heroku server will `force to shudown 6 hours per day`, you will need to implement a dedicate server to notify Line Notify service once the notification happen anytime.
+
+If you still have any questions, please file your issue and let me know.
 
 ## Reference
 
