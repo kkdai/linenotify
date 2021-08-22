@@ -80,7 +80,7 @@ This is example of my heroku settup.
 
 In your fork repo, path
 
-- `git add remote heroku https://git.heroku.com/YOUR_ID.git`
+- `git remote add heroku https://git.heroku.com/YOUR_ID.git`
 
 ### 4. Update your related code.
 
